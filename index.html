@@ -41,7 +41,7 @@
         </div>
       </div>
       
-      <!-- API Connection Status and User Session -->
+      <!-- API Status -->
       <div class="flex items-center gap-3">
         <div id="connectionStatus" class="flex items-center space-x-2 bg-emerald-900/40 border border-emerald-500/30 px-3 py-1.5 rounded-full text-xs font-semibold">
           <span class="w-2.5 h-2.5 bg-amber-400 rounded-full animate-ping" id="statusDot"></span>
@@ -64,7 +64,7 @@
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 sm:px-6 lg:px-8">
 
     <div id="loginPanel" class="max-w-4xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- Portal Guru Card -->
+      <!-- Guru Portal Card -->
       <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
         <div class="flex items-center space-x-4 mb-6">
           <div class="bg-emerald-100 text-emerald-700 p-4 rounded-2xl">
@@ -101,7 +101,7 @@
         </form>
       </div>
 
-      <!-- Portal Siswa Card -->
+      <!-- Siswa Portal Card -->
       <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
         <div>
           <div class="flex items-center space-x-4 mb-6">
@@ -114,7 +114,7 @@
             </div>
           </div>
           <p class="text-slate-500 mb-6 text-sm leading-relaxed">
-            Siswa dapat memantau secara berkala hasil akumulasi kehadiran, statistik nilai tugas, nilai ulangan, hingga nilai akhir rapor Bahasa Indonesia tanpa memerlukan sandi masuk.
+            Siswa dapat memantau secara berkala hasil akumulasi kehadiran, statistik nilai tugas, nilai ulangan, hingga nilai akhir rapor Bahasa Indonesia secara privat, aman, dan tanpa kata sandi.
           </p>
         </div>
         <button onclick="enterSiswaPortal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-blue-600/20 transition duration-150 flex justify-center items-center gap-2">
@@ -124,7 +124,6 @@
     </div>
 
     <div id="guruApp" class="hidden">
-      <!-- Main Navigation Tabs for Guru -->
       <nav class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 pb-3">
         <button onclick="switchTab('presensi')" id="tab-presensi" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-sm transition duration-150 flex items-center space-x-2 bg-emerald-600 text-white shadow">
           <i class="fa-solid fa-clipboard-user"></i> <span>Input Presensi</span>
@@ -141,18 +140,19 @@
       </nav>
 
       <div class="space-y-6">
-        <!-- PRESENSI PANEL -->
+        <!-- PRESENSI WORKSPACE PANEL -->
         <section id="panel-presensi" class="tab-panel">
           <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
             <h2 class="text-xl font-bold mb-4 text-slate-800 flex items-center"><i class="fa-solid fa-square-check text-emerald-600 mr-2"></i> Presensi Pembelajaran</h2>
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Kelas</label>
-                <select id="presensi-kelas" onchange="loadStudentsForPresensi()" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50">
-                  <option value="">-- Pilih Kelas --</option>
-                  <option value="XII Wajib">Bahasa Indonesia (XII Wajib)</option>
-                  <option value="XI A Lanjut">Bahasa Indonesia Tingkat Lanjut (XI A)</option>
-                  <option value="XII A Lanjut">Bahasa Indonesia Tingkat Lanjut (XII A)</option>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Program & Kelas</label>
+                <select id="presensi-kelas-select" onchange="loadStudentsForPresensi()" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50">
+                  <option value="">-- Pilih Pembelajaran --</option>
+                  <option value="XII|Bahasa Indonesia">Bahasa Indonesia (XII)</option>
+                  <option value="XI A|Bahasa Indonesia Tingkat Lanjut">Bahasa Indonesia Tingkat Lanjut (XI A)</option>
+                  <option value="XII A|Bahasa Indonesia Tingkat Lanjut">Bahasa Indonesia Tingkat Lanjut (XII A)</option>
                 </select>
               </div>
               <div>
@@ -180,9 +180,7 @@
                       <th class="p-4 text-center">Alpa (A)</th>
                     </tr>
                   </thead>
-                  <tbody id="presensi-list" class="divide-y divide-slate-100 text-sm">
-                    <!-- Dinamis oleh JS -->
-                  </tbody>
+                  <tbody id="presensi-list" class="divide-y divide-slate-100 text-sm"></tbody>
                 </table>
               </div>
               <div class="mt-6 flex justify-end">
@@ -199,18 +197,19 @@
           </div>
         </section>
 
-        <!-- PENILAIAN PANEL -->
+        <!-- PENILAIAN WORKSPACE PANEL -->
         <section id="panel-nilai" class="tab-panel hidden">
           <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
             <h2 class="text-xl font-bold mb-4 text-slate-800 flex items-center"><i class="fa-solid fa-star text-amber-500 mr-2"></i> Penilaian Pembelajaran</h2>
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Kelas</label>
-                <select id="nilai-kelas" onchange="loadStudentsForNilai()" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50">
-                  <option value="">-- Pilih Kelas --</option>
-                  <option value="XII Wajib">Bahasa Indonesia (XII Wajib)</option>
-                  <option value="XI A Lanjut">Bahasa Indonesia Tingkat Lanjut (XI A)</option>
-                  <option value="XII A Lanjut">Bahasa Indonesia Tingkat Lanjut (XII A)</option>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Program & Kelas</label>
+                <select id="nilai-kelas-select" onchange="loadStudentsForNilai()" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50">
+                  <option value="">-- Pilih Pembelajaran --</option>
+                  <option value="XII|Bahasa Indonesia">Bahasa Indonesia (XII)</option>
+                  <option value="XI A|Bahasa Indonesia Tingkat Lanjut">Bahasa Indonesia Tingkat Lanjut (XI A)</option>
+                  <option value="XII A|Bahasa Indonesia Tingkat Lanjut">Bahasa Indonesia Tingkat Lanjut (XII A)</option>
                 </select>
               </div>
               <div>
@@ -223,9 +222,7 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Opsi Penilaian</label>
-                <select id="nilai-detail" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50">
-                  <!-- Dinamis oleh JS -->
-                </select>
+                <select id="nilai-detail" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50"></select>
               </div>
             </div>
 
@@ -240,9 +237,7 @@
                       <th class="p-4 text-right pr-12" style="width: 250px;">Nilai Skor (0 - 100)</th>
                     </tr>
                   </thead>
-                  <tbody id="nilai-list" class="divide-y divide-slate-100 text-sm">
-                    <!-- Dinamis oleh JS -->
-                  </tbody>
+                  <tbody id="nilai-list" class="divide-y divide-slate-100 text-sm"></tbody>
                 </table>
               </div>
               <div class="mt-6 flex justify-end">
@@ -259,7 +254,7 @@
           </div>
         </section>
 
-        <!-- JURNAL PANEL -->
+        <!-- JURNAL WORKSPACE PANEL -->
         <section id="panel-jurnal" class="tab-panel hidden">
           <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 max-w-3xl mx-auto">
             <h2 class="text-xl font-bold mb-4 text-slate-800 flex items-center"><i class="fa-solid fa-book-open text-indigo-600 mr-2"></i> Jurnal Mengajar Harian</h2>
@@ -270,24 +265,24 @@
                   <input type="date" id="jurnal-tanggal" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50">
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Kelas</label>
-                  <select id="jurnal-kelas" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50">
-                    <option value="">-- Pilih Kelas --</option>
-                    <option value="XII Wajib">Bahasa Indonesia (XII Wajib)</option>
-                    <option value="XI A Lanjut">Bahasa Indonesia Tingkat Lanjut (XI A)</option>
-                    <option value="XII A Lanjut">Bahasa Indonesia Tingkat Lanjut (XII A)</option>
+                  <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Pembelajaran</label>
+                  <select id="jurnal-kelas-select" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50">
+                    <option value="">-- Pilih Pembelajaran --</option>
+                    <option value="XII|Bahasa Indonesia">Bahasa Indonesia (XII)</option>
+                    <option value="XI A|Bahasa Indonesia Tingkat Lanjut">Bahasa Indonesia Tingkat Lanjut (XI A)</option>
+                    <option value="XII A|Bahasa Indonesia Tingkat Lanjut">Bahasa Indonesia Tingkat Lanjut (XII A)</option>
                   </select>
                 </div>
               </div>
 
               <div>
                 <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Materi Pokok / KD</label>
-                <input type="text" id="jurnal-materi" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50" placeholder="Contoh: Menyusun Proposal Penelitian Kegiatan">
+                <input type="text" id="jurnal-materi" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50" placeholder="Contoh: Menyusun Proposal Kegiatan">
               </div>
 
               <div>
                 <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Deskripsi Kegiatan Pembelajaran</label>
-                <textarea id="jurnal-kegiatan" rows="4" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50" placeholder="Tuliskan detail jalannya pembelajaran, penugasan, keaktifan dll..."></textarea>
+                <textarea id="jurnal-kegiatan" rows="4" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none font-semibold text-slate-700 bg-slate-50" placeholder="Tuliskan detail jalannya pembelajaran, keaktifan dll..."></textarea>
               </div>
 
               <div>
@@ -316,7 +311,7 @@
           </div>
         </section>
 
-        <!-- REKAP PANEL -->
+        <!-- REKAP WORKSPACE PANEL -->
         <section id="panel-rekap" class="tab-panel hidden">
           <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
@@ -325,10 +320,10 @@
                 <p class="text-xs text-slate-400">Kelola visual rekap presensi, nilai, serta jurnal di bawah ini.</p>
               </div>
               <div class="flex items-center space-x-3 w-full md:w-auto">
-                <select id="rekap-kelas" onchange="loadRekapData()" class="w-full md:w-56 p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none text-sm font-bold bg-slate-50 text-slate-700">
-                  <option value="XII Wajib">XII Wajib</option>
-                  <option value="XI A Lanjut">XI A Lanjut</option>
-                  <option value="XII A Lanjut">XII A Lanjut</option>
+                <select id="rekap-kelas-select" onchange="loadRekapData()" class="w-full md:w-72 p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none text-sm font-bold bg-slate-50 text-slate-700">
+                  <option value="XII|Bahasa Indonesia">Bahasa Indonesia (XII)</option>
+                  <option value="XI A|Bahasa Indonesia Tingkat Lanjut">BI Tingkat Lanjut (XI A)</option>
+                  <option value="XII A|Bahasa Indonesia Tingkat Lanjut">BI Tingkat Lanjut (XII A)</option>
                 </select>
               </div>
             </div>
@@ -367,9 +362,7 @@
                       <th class="p-4 text-right pr-6">Kehadiran (%)</th>
                     </tr>
                   </thead>
-                  <tbody id="rekap-presensi-body" class="divide-y divide-slate-100 text-sm text-slate-600">
-                    <!-- Dinamis -->
-                  </tbody>
+                  <tbody id="rekap-presensi-body" class="divide-y divide-slate-100 text-sm text-slate-600"></tbody>
                 </table>
               </div>
             </div>
@@ -389,29 +382,27 @@
               </div>
               
               <div id="rekap-nilai-area" class="overflow-x-auto custom-scrollbar border border-slate-100 rounded-2xl">
-                <table id="rekap-nilai-table" class="w-full text-left border-collapse text-xs">
+                <table id="rekap-nilai-table" class="w-full text-left border-collapse text-[11px]">
                   <thead>
                     <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 font-extrabold uppercase text-center">
                       <th class="p-3 pl-4 text-left">Nama</th>
-                      <th class="p-3">T1</th>
-                      <th class="p-3">T2</th>
-                      <th class="p-3">T3</th>
-                      <th class="p-3">T4</th>
-                      <th class="p-3">T5</th>
-                      <th class="p-3 font-bold text-emerald-700 bg-emerald-50">RTTG</th>
-                      <th class="p-3">UH1</th>
-                      <th class="p-3">UH2</th>
-                      <th class="p-3">UH3</th>
-                      <th class="p-3">UH4</th>
-                      <th class="p-3">UH5</th>
-                      <th class="p-3 font-bold text-blue-700 bg-blue-50">RTUH</th>
-                      <th class="p-3">Sumatif</th>
+                      <th class="p-2">T1</th>
+                      <th class="p-2">T2</th>
+                      <th class="p-2">T3</th>
+                      <th class="p-2">T4</th>
+                      <th class="p-2">T5</th>
+                      <th class="p-2 font-bold text-emerald-700 bg-emerald-50">RTTG</th>
+                      <th class="p-2">UH1</th>
+                      <th class="p-2">UH2</th>
+                      <th class="p-2">UH3</th>
+                      <th class="p-2">UH4</th>
+                      <th class="p-2">UH5</th>
+                      <th class="p-2 font-bold text-blue-700 bg-blue-50">RTUH</th>
+                      <th class="p-2">Sumatif</th>
                       <th class="p-3 pr-4 font-extrabold text-amber-700 bg-amber-50">Nilai Akhir</th>
                     </tr>
                   </thead>
-                  <tbody id="rekap-nilai-body" class="divide-y divide-slate-100 text-slate-600">
-                    <!-- Dinamis -->
-                  </tbody>
+                  <tbody id="rekap-nilai-body" class="divide-y divide-slate-100 text-slate-600"></tbody>
                 </table>
               </div>
             </div>
@@ -428,9 +419,7 @@
                       <th class="p-4 text-center" style="width: 150px;">Dokumentasi</th>
                     </tr>
                   </thead>
-                  <tbody id="rekap-jurnal-body" class="divide-y divide-slate-100 text-sm text-slate-600">
-                    <!-- Dinamis -->
-                  </tbody>
+                  <tbody id="rekap-jurnal-body" class="divide-y divide-slate-100 text-sm text-slate-600"></tbody>
                 </table>
               </div>
             </div>
@@ -453,12 +442,12 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Kelas</label>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Program & Kelas</label>
             <select id="siswa-kelas-select" onchange="loadStudentsForSiswaPortal()" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700 bg-slate-50">
-              <option value="">-- Pilih Kelas --</option>
-              <option value="XII Wajib">Bahasa Indonesia (XII Wajib)</option>
-              <option value="XI A Lanjut">Bahasa Indonesia Tingkat Lanjut (XI A)</option>
-              <option value="XII A Lanjut">Bahasa Indonesia Tingkat Lanjut (XII A)</option>
+              <option value="">-- Pilih Pembelajaran --</option>
+              <option value="XII|Bahasa Indonesia">Bahasa Indonesia (XII)</option>
+              <option value="XI A|Bahasa Indonesia Tingkat Lanjut">Bahasa Indonesia Tingkat Lanjut (XI A)</option>
+              <option value="XII A|Bahasa Indonesia Tingkat Lanjut">Bahasa Indonesia Tingkat Lanjut (XII A)</option>
             </select>
           </div>
           <div>
@@ -493,7 +482,6 @@
             <div class="bg-white border border-slate-100 p-5 rounded-2xl text-center flex flex-col justify-between">
               <h4 class="font-bold text-slate-700 text-sm mb-4">Statistik Kehadiran</h4>
               <div class="relative w-32 h-32 mx-auto flex items-center justify-center">
-                <!-- SVG Circle Progress -->
                 <svg class="w-full h-full transform -rotate-90">
                   <circle cx="64" cy="64" r="50" stroke="#f1f5f9" stroke-width="10" fill="transparent" />
                   <circle id="attendance-circle" cx="64" cy="64" r="50" stroke="#10b981" stroke-width="10" fill="transparent" stroke-dasharray="314" stroke-dashoffset="0" />
@@ -530,16 +518,13 @@
 
   </main>
 
-  <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2 max-w-sm"></div>
 
-  <!-- STUDENT DETAIL MODAL (FOR GURU) -->
+  <!-- STUDENT DETAIL MODAL (FOR GURU REKAP CLICK) -->
   <div id="studentDetailModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
     <div class="bg-white w-full max-w-xl rounded-3xl p-6 shadow-2xl relative border border-slate-100 mx-4">
       <button onclick="closeStudentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl transition"><i class="fa-solid fa-circle-xmark"></i></button>
-      <div id="student-modal-content">
-        <!-- Dinamis -->
-      </div>
+      <div id="student-modal-content"></div>
     </div>
   </div>
 
@@ -552,27 +537,27 @@
   </footer>
 
   <script>
-    // URL Web App Google Apps Script Milik Ibu Mina
+    // URL Web App Google Apps Script Milik Ibu Mina (Terkoneksi Otomatis)
     const API_URL = "https://script.google.com/macros/s/AKfycbzfLkBHHSaA0dCrfK-V037zk7WWwmp3SdH2BHEVgV-mBx688UDrRYBEmGQgYH0oWbZP/exec";
 
-    // Fallback Dummy Data jika backend mati atau tidak terkoneksi saat inisialisasi awal
+    // Fallback Dummy Data jika backend dalam fase uji coba offline / simulator
     let isOfflineFallback = false;
     let localSiswa = [
-      {id: "S001", nama: "Ahmad Fauzi", kelas: "XII Wajib"},
-      {id: "S002", nama: "Budi Santoso", kelas: "XII Wajib"},
-      {id: "S003", nama: "Citra Kirana", kelas: "XII Wajib"},
-      {id: "S004", nama: "Dewi Lestari", kelas: "XII Wajib"},
-      {id: "S005", nama: "Eko Prasetyo", kelas: "XII Wajib"},
-      {id: "S006", nama: "Ananda Putri", kelas: "XI A Lanjut"},
-      {id: "S007", nama: "Bagus Wijaya", kelas: "XI A Lanjut"},
-      {id: "S008", nama: "Cahya Ningrum", kelas: "XI A Lanjut"},
-      {id: "S010", nama: "Faisal Rahman", kelas: "XI A Lanjut"},
-      {id: "S011", nama: "Aditya Nugraha", kelas: "XII A Lanjut"},
-      {id: "S012", nama: "Bella Safira", kelas: "XII A Lanjut"},
-      {id: "S013", nama: "Chandra Wijaya", kelas: "XII A Lanjut"}
+      {id: "S001", nama: "Ahmad Fauzi", kelas: "XII", mapel: "Bahasa Indonesia"},
+      {id: "S002", nama: "Budi Santoso", kelas: "XII", mapel: "Bahasa Indonesia"},
+      {id: "S003", nama: "Citra Kirana", kelas: "XII", mapel: "Bahasa Indonesia"},
+      {id: "S004", nama: "Dewi Lestari", kelas: "XII", mapel: "Bahasa Indonesia"},
+      {id: "S005", nama: "Eko Prasetyo", kelas: "XII", mapel: "Bahasa Indonesia"},
+      {id: "S006", nama: "Ananda Putri", kelas: "XI A", mapel: "Bahasa Indonesia Tingkat Lanjut"},
+      {id: "S007", nama: "Bagus Wijaya", kelas: "XI A", mapel: "Bahasa Indonesia Tingkat Lanjut"},
+      {id: "S008", nama: "Cahya Ningrum", kelas: "XI A", mapel: "Bahasa Indonesia Tingkat Lanjut"},
+      {id: "S009", nama: "Dina Mariana", kelas: "XI A", mapel: "Bahasa Indonesia Tingkat Lanjut"},
+      {id: "S010", nama: "Faisal Rahman", kelas: "XI A", mapel: "Bahasa Indonesia Tingkat Lanjut"},
+      {id: "S011", nama: "Aditya Nugraha", kelas: "XII A", mapel: "Bahasa Indonesia Tingkat Lanjut"},
+      {id: "S012", nama: "Bella Safira", kelas: "XII A", mapel: "Bahasa Indonesia Tingkat Lanjut"},
+      {id: "S013", nama: "Chandra Wijaya", kelas: "XII A", mapel: "Bahasa Indonesia Tingkat Lanjut"}
     ];
 
-    // State Internal Aplikasi
     let currentUser = null;
     let selectedRole = null;
     let loadedStudents = [];
@@ -580,13 +565,9 @@
     let fileUploadedData = null;
     let rekapCache = null;
 
-    // Set Input Tanggal Default ke Hari ini
     document.getElementById("presensi-tanggal").value = new Date().toISOString().substring(0, 10);
     document.getElementById("jurnal-tanggal").value = new Date().toISOString().substring(0, 10);
 
-    /**
-     * Memunculkan notifikasi Toast di kanan bawah layar (Sesuai protokol: Hindari alert!)
-     */
     function showToast(message, type = 'success') {
       const container = document.getElementById("toastContainer");
       const toast = document.createElement("div");
@@ -613,9 +594,6 @@
       }, 4000);
     }
 
-    /**
-     * Fungsi pemanggil API ke Google Apps Script Web App
-     */
     async function callAPI(action, params = {}, payload = null) {
       if (isOfflineFallback) {
         return simulateOfflineAPI(action, params, payload);
@@ -635,7 +613,6 @@
       if (payload) {
         options.method = "POST";
         options.body = JSON.stringify(payload);
-        // Menggunakan text/plain untuk bypass CORS preflight request (OPTIONS) dari browser
         options.headers = {
           "Content-Type": "text/plain;charset=utf-8"
         };
@@ -654,22 +631,16 @@
       }
     }
 
-    /**
-     * Mengaktifkan tanda mode offline di header
-     */
     function activateOfflineMode() {
       isOfflineFallback = true;
       const dot = document.getElementById("statusDot");
       const text = document.getElementById("statusText");
       dot.className = "w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse";
-      text.innerText = "Mode Simulator (Koneksi Terputus)";
+      text.innerText = "Mode Simulator (Offline)";
       text.className = "text-amber-400";
-      showToast("Gagal terhubung dengan server Google Apps Script. Mengaktifkan Mode Simulator Offline.", "warning");
+      showToast("Mengaktifkan Mode Simulator Offline (Dijalankan secara lokal).", "warning");
     }
 
-    /**
-     * Mengonfirmasi koneksi server saat halaman di-load
-     */
     async function checkServerConnection() {
       try {
         const res = await fetch(API_URL + "?action=checkConnection", { redirect: "follow" });
@@ -691,16 +662,13 @@
       checkServerConnection();
     };
 
-    /**
-     * Simulator Penyimpanan Offline (LocalStorage) jika koneksi utama ke Google Sheets terganggu
-     */
     function simulateOfflineAPI(action, params, payload) {
       if (!localStorage.getItem("offline_presensi")) localStorage.setItem("offline_presensi", JSON.stringify([]));
       if (!localStorage.getItem("offline_nilai")) localStorage.setItem("offline_nilai", JSON.stringify([]));
       if (!localStorage.getItem("offline_jurnal")) localStorage.setItem("offline_jurnal", JSON.stringify([]));
 
       if (action === "getSiswa") {
-        return localSiswa.filter(s => s.kelas === params.kelas);
+        return localSiswa.filter(s => s.kelas === params.kelas && s.mapel === params.mapel);
       }
       
       if (action === "getRekap") {
@@ -708,12 +676,13 @@
         const dbNilai = JSON.parse(localStorage.getItem("offline_nilai"));
         const dbJurnal = JSON.parse(localStorage.getItem("offline_jurnal"));
         const kelas = params.kelas;
+        const mapel = params.mapel;
 
-        const classStudents = localSiswa.filter(s => s.kelas === kelas);
+        const classStudents = localSiswa.filter(s => s.kelas === kelas && s.mapel === mapel);
 
         const presensi = classStudents.map(s => {
-          const r = dbPresensi.find(p => p.nama === s.nama && p.kelas === kelas) || { catatan: [] };
-          const item = { nama: s.nama, kelas: kelas, H: 0, S: 0, I: 0, A: 0, totalSesi: 0, detail: [] };
+          const r = dbPresensi.find(p => p.nama === s.nama && p.kelas === kelas && p.mapel === mapel) || { catatan: [] };
+          const item = { nama: s.nama, kelas: kelas, mapel: mapel, H: 0, S: 0, I: 0, A: 0, totalSesi: 0, detail: [] };
           r.catatan.forEach(c => {
             item.totalSesi++;
             item[c.status] = (item[c.status] || 0) + 1;
@@ -724,16 +693,16 @@
         });
 
         const nilai = classStudents.map(s => {
-          const r = dbNilai.find(n => n.nama === s.nama && n.kelas === kelas) || {};
+          const r = dbNilai.find(n => n.nama === s.nama && n.kelas === kelas && n.mapel === mapel) || {};
           return {
-            nama: s.nama, kelas: kelas,
+            nama: s.nama, kelas: kelas, mapel: mapel,
             Tugas1: r.Tugas1 || "", Tugas2: r.Tugas2 || "", Tugas3: r.Tugas3 || "", Tugas4: r.Tugas4 || "", Tugas5: r.Tugas5 || "",
             UH1: r.UH1 || "", UH2: r.UH2 || "", UH3: r.UH3 || "", UH4: r.UH4 || "", UH5: r.UH5 || "",
             RTTG: r.RTTG || "", RTUH: r.RTUH || "", Sumatif: r.Sumatif || "", Nilai_Akhir: r.Nilai_Akhir || ""
           };
         });
 
-        const jurnal = dbJurnal.filter(j => j.kelas === kelas);
+        const jurnal = dbJurnal.filter(j => j.kelas === kelas && j.mapel === mapel);
 
         return { presensi, nilai, jurnal };
       }
@@ -741,9 +710,9 @@
       if (action === "savePresensi") {
         const dbPresensi = JSON.parse(localStorage.getItem("offline_presensi"));
         payload.dataPresensi.forEach(p => {
-          let rec = dbPresensi.find(item => item.nama === p.nama && item.kelas === payload.kelas);
+          let rec = dbPresensi.find(item => item.nama === p.nama && item.kelas === payload.kelas && item.mapel === payload.mapel);
           if (!rec) {
-            rec = { nama: p.nama, kelas: payload.kelas, catatan: [] };
+            rec = { nama: p.nama, kelas: payload.kelas, mapel: payload.mapel, catatan: [] };
             dbPresensi.push(rec);
           }
           const idx = rec.catatan.findIndex(c => c.tanggal === payload.tanggal);
@@ -759,14 +728,13 @@
         const key = payload.jenisPenilaian === "Sumatif Akhir" ? "Sumatif" : (payload.jenisPenilaian + payload.detailPenilaian);
 
         payload.dataNilai.forEach(n => {
-          let rec = dbNilai.find(item => item.nama === n.nama && item.kelas === payload.kelas);
+          let rec = dbNilai.find(item => item.nama === n.nama && item.kelas === payload.kelas && item.mapel === payload.mapel);
           if (!rec) {
-            rec = { nama: n.nama, kelas: payload.kelas };
+            rec = { nama: n.nama, kelas: payload.kelas, mapel: payload.mapel };
             dbNilai.push(rec);
           }
           rec[key] = n.nilai !== "" ? Number(n.nilai) : "";
 
-          // Hitung rata-rata
           const tArr = [rec.Tugas1, rec.Tugas2, rec.Tugas3, rec.Tugas4, rec.Tugas5].filter(v => v !== undefined && v !== "");
           rec.RTTG = tArr.length > 0 ? (tArr.reduce((a, b) => a + b, 0) / tArr.length).toFixed(2) : "";
 
@@ -792,6 +760,7 @@
         dbJurnal.push({
           tanggal: payload.tanggal,
           kelas: payload.kelas,
+          mapel: payload.mapel,
           materi: payload.materi,
           kegiatan: payload.kegiatan,
           link: "Tidak ada lampiran"
@@ -801,9 +770,6 @@
       }
     }
 
-    /**
-     * Memproses masuk/login Guru
-     */
     function handleLogin(event) {
       event.preventDefault();
       const user = document.getElementById("username").value;
@@ -822,13 +788,10 @@
         document.getElementById("userBadge").innerText = "Guru";
         document.getElementById("userBadge").className = "text-[10px] bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded-md font-extrabold uppercase";
       } else {
-        showToast("Username atau password salah! Silakan coba lagi.", "error");
+        showToast("Username atau password salah!", "error");
       }
     }
 
-    /**
-     * Memasuki portal pencarian data bagi siswa
-     */
     function enterSiswaPortal() {
       selectedRole = "siswa";
       document.getElementById("loginPanel").classList.add("hidden");
@@ -839,9 +802,6 @@
       document.getElementById("userBadge").className = "text-[10px] bg-blue-400 text-slate-950 px-1.5 py-0.5 rounded-md font-extrabold uppercase";
     }
 
-    /**
-     * Membersihkan sesi login dan kembali ke gerbang utama
-     */
     function logout() {
       currentUser = null;
       selectedRole = null;
@@ -853,9 +813,6 @@
       document.getElementById("password").value = "";
     }
 
-    /**
-     * Mengubah tab workspace aktif guru
-     */
     function switchTab(tabId) {
       document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.add("hidden"));
       document.getElementById(`panel-${tabId}`).classList.remove("hidden");
@@ -878,9 +835,6 @@
       }
     }
 
-    /**
-     * Menukar sub-tab bagian Rekapitulasi Data
-     */
     function switchRekapTab(subTabId) {
       document.querySelectorAll(".rekap-panel-container").forEach(panel => panel.classList.add("hidden"));
       document.getElementById(`rekap-panel-${subTabId}`).classList.remove("hidden");
@@ -897,16 +851,15 @@
       activeBtn.classList.add("border-emerald-500", "text-emerald-600", "font-bold");
     }
 
-    /**
-     * Memanggil daftar siswa untuk formulir presensi harian
-     */
     async function loadStudentsForPresensi() {
-      const kelas = document.getElementById("presensi-kelas").value;
-      if (!kelas) {
+      const selectVal = document.getElementById("presensi-kelas-select").value;
+      if (!selectVal) {
         document.getElementById("presensi-container").classList.add("hidden");
         document.getElementById("presensi-placeholder").classList.remove("hidden");
         return;
       }
+
+      const [kelas, mapel] = selectVal.split("|");
 
       document.getElementById("presensi-placeholder").classList.add("hidden");
       document.getElementById("presensi-container").classList.remove("hidden");
@@ -915,12 +868,12 @@
       listBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400"><i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengunduh nama siswa...</td></tr>`;
 
       try {
-        const students = await callAPI("getSiswa", { kelas: kelas });
+        const students = await callAPI("getSiswa", { kelas, mapel });
         loadedStudents = students;
         listBody.innerHTML = "";
 
         if (students.length === 0) {
-          listBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400">Tidak ditemukan siswa terdaftar di kelas ini.</td></tr>`;
+          listBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400">Tidak ditemukan siswa terdaftar di kelas & mapel ini.</td></tr>`;
           return;
         }
 
@@ -949,9 +902,6 @@
       }
     }
 
-    /**
-     * Memilih status yang sama untuk seluruh siswa sekaligus
-     */
     function applyAllStatus(status) {
       loadedStudents.forEach(student => {
         const el = document.querySelector(`input[name="status-${student.id}"][value="${status}"]`);
@@ -960,18 +910,17 @@
       showToast(`Seluruh siswa diset ke status: ${status === 'H' ? 'Hadir' : status}`);
     }
 
-    /**
-     * Mengirim bundle presensi harian ke database
-     */
     async function submitPresensi() {
-      const kelas = document.getElementById("presensi-kelas").value;
+      const selectVal = document.getElementById("presensi-kelas-select").value;
       const tanggal = document.getElementById("presensi-tanggal").value;
       const btn = document.getElementById("btn-save-presensi");
 
-      if (!kelas || !tanggal) {
-        showToast("Tentukan Kelas dan Tanggal Presensi terlebih dahulu!", "error");
+      if (!selectVal || !tanggal) {
+        showToast("Tentukan Pembelajaran dan Tanggal Presensi terlebih dahulu!", "error");
         return;
       }
+
+      const [kelas, mapel] = selectVal.split("|");
 
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengirim data...`;
@@ -985,7 +934,7 @@
       });
 
       try {
-        const payload = { kelas, tanggal, dataPresensi: presensiData, action: "savePresensi" };
+        const payload = { kelas, mapel, tanggal, dataPresensi: presensiData, action: "savePresensi" };
         const res = await callAPI("savePresensi", {}, payload);
         if (res.success) {
           showToast(res.message);
@@ -1000,16 +949,15 @@
       }
     }
 
-    /**
-     * Memanggil daftar siswa untuk input nilai
-     */
     async function loadStudentsForNilai() {
-      const kelas = document.getElementById("nilai-kelas").value;
-      if (!kelas) {
+      const selectVal = document.getElementById("nilai-kelas-select").value;
+      if (!selectVal) {
         document.getElementById("nilai-container").classList.add("hidden");
         document.getElementById("nilai-placeholder").classList.remove("hidden");
         return;
       }
+
+      const [kelas, mapel] = selectVal.split("|");
 
       document.getElementById("nilai-placeholder").classList.add("hidden");
       document.getElementById("nilai-container").classList.remove("hidden");
@@ -1019,7 +967,7 @@
       listBody.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-slate-400"><i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengunduh nama siswa...</td></tr>`;
 
       try {
-        const students = await callAPI("getSiswa", { kelas: kelas });
+        const students = await callAPI("getSiswa", { kelas, mapel });
         loadedStudents = students;
         listBody.innerHTML = "";
 
@@ -1044,9 +992,6 @@
       }
     }
 
-    /**
-     * Menyesuaikan opsi dropdown penilaian ke samping secara adaptif
-     */
     function handleJenisPenilaianChange() {
       const jenis = document.getElementById("nilai-jenis").value;
       const detailSelect = document.getElementById("nilai-detail");
@@ -1069,19 +1014,18 @@
       }
     }
 
-    /**
-     * Mengirim bundle isian nilai untuk disimpan dan dikalkulasi
-     */
     async function submitNilai() {
-      const kelas = document.getElementById("nilai-kelas").value;
+      const selectVal = document.getElementById("nilai-kelas-select").value;
       const jenis = document.getElementById("nilai-jenis").value;
       const detail = document.getElementById("nilai-detail").value;
       const btn = document.getElementById("btn-save-nilai");
 
-      if (!kelas) {
-        showToast("Tentukan Kelas terlebih dahulu!", "error");
+      if (!selectVal) {
+        showToast("Tentukan Pembelajaran terlebih dahulu!", "error");
         return;
       }
+
+      const [kelas, mapel] = selectVal.split("|");
 
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengunggah nilai...`;
@@ -1095,7 +1039,7 @@
       });
 
       try {
-        const payload = { kelas, jenisPenilaian: jenis, detailPenilaian: detail, dataNilai: nilaiData, action: "saveNilai" };
+        const payload = { kelas, mapel, jenisPenilaian: jenis, detailPenilaian: detail, dataNilai: nilaiData, action: "saveNilai" };
         const res = await callAPI("saveNilai", {}, payload);
         if (res.success) {
           showToast(res.message);
@@ -1113,7 +1057,6 @@
       }
     }
 
-    // Menangkap file dokumentasi dan mengubah ke format base64
     document.getElementById("jurnal-file").addEventListener("change", function(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1132,22 +1075,26 @@
       reader.readAsDataURL(file);
     });
 
-    /**
-     * Mengunggah isian form Jurnal Mengajar Harian
-     */
     async function submitJurnal(event) {
       event.preventDefault();
       const tanggal = document.getElementById("jurnal-tanggal").value;
-      const kelas = document.getElementById("jurnal-kelas").value;
+      const selectVal = document.getElementById("jurnal-kelas-select").value;
       const materi = document.getElementById("jurnal-materi").value;
       const kegiatan = document.getElementById("jurnal-kegiatan").value;
       const btn = document.getElementById("btn-save-jurnal");
+
+      if (!selectVal) {
+        showToast("Pilih Pembelajaran terlebih dahulu!", "error");
+        return;
+      }
+
+      const [kelas, mapel] = selectVal.split("|");
 
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengirim Jurnal...`;
 
       const payload = {
-        tanggal, kelas, materi, kegiatan,
+        tanggal, kelas, mapel, materi, kegiatan,
         fileData: fileUploadedData ? fileUploadedData.fileData : null,
         fileName: fileUploadedData ? fileUploadedData.fileName : null,
         action: "saveJurnal"
@@ -1173,21 +1120,22 @@
       }
     }
 
-    /**
-     * Memuat dan menyusun Rekapitulasi Data dari spreadsheet ke tabel-tabel guru
-     */
     async function loadRekapData() {
-      const kelas = document.getElementById("rekap-kelas").value;
+      const selectVal = document.getElementById("rekap-kelas-select").value;
       const presensiBody = document.getElementById("rekap-presensi-body");
       const nilaiBody = document.getElementById("rekap-nilai-body");
       const jurnalBody = document.getElementById("rekap-jurnal-body");
+
+      if (!selectVal) return;
+
+      const [kelas, mapel] = selectVal.split("|");
 
       presensiBody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400"><i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengumpulkan rekap presensi...</td></tr>`;
       nilaiBody.innerHTML = `<tr><td colspan="15" class="p-8 text-center text-slate-400"><i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengumpulkan rekap nilai...</td></tr>`;
       jurnalBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-400"><i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengunduh entri jurnal...</td></tr>`;
 
       try {
-        const data = await callAPI("getRekap", { kelas: kelas });
+        const data = await callAPI("getRekap", { kelas, mapel });
         rekapCache = data;
 
         // Render Presensi
@@ -1203,7 +1151,7 @@
 
             presensiBody.innerHTML += `
               <tr class="hover:bg-slate-50 transition">
-                <td class="p-4 font-bold text-slate-700 cursor-pointer text-emerald-600 hover:underline" onclick="showStudentDetailModal('${item.nama}', '${kelas}')">${item.nama}</td>
+                <td class="p-4 font-bold text-slate-700 cursor-pointer text-emerald-600 hover:underline" onclick="showStudentDetailModal('${item.nama}', '${kelas}', '${mapel}')">${item.nama}</td>
                 <td class="p-4 text-center font-bold text-emerald-600">${item.H || 0}</td>
                 <td class="p-4 text-center font-bold text-amber-500">${item.S || 0}</td>
                 <td class="p-4 text-center font-bold text-blue-500">${item.I || 0}</td>
@@ -1240,20 +1188,20 @@
 
             nilaiBody.innerHTML += `
               <tr class="hover:bg-slate-50 transition text-center">
-                <td class="p-3 pl-4 text-left font-bold text-slate-700 cursor-pointer text-blue-600 hover:underline" onclick="showStudentDetailModal('${item.nama}', '${kelas}')">${item.nama}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.Tugas1 ?? ""}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.Tugas2 ?? ""}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.Tugas3 ?? ""}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.Tugas4 ?? ""}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.Tugas5 ?? ""}</td>
-                <td class="p-3 font-extrabold text-emerald-600 bg-emerald-50/30">${rttg}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.UH1 ?? ""}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.UH2 ?? ""}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.UH3 ?? ""}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.UH4 ?? ""}</td>
-                <td class="p-3 text-slate-400 font-medium">${item.UH5 ?? ""}</td>
-                <td class="p-3 font-extrabold text-blue-600 bg-blue-50/30">${rtuh}</td>
-                <td class="p-3 font-semibold text-slate-600">${sumatif}</td>
+                <td class="p-3 pl-4 text-left font-bold text-slate-700 cursor-pointer text-blue-600 hover:underline" onclick="showStudentDetailModal('${item.nama}', '${kelas}', '${mapel}')">${item.nama}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.Tugas1 ?? ""}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.Tugas2 ?? ""}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.Tugas3 ?? ""}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.Tugas4 ?? ""}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.Tugas5 ?? ""}</td>
+                <td class="p-2 font-extrabold text-emerald-600 bg-emerald-50/30">${rttg}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.UH1 ?? ""}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.UH2 ?? ""}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.UH3 ?? ""}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.UH4 ?? ""}</td>
+                <td class="p-2 text-slate-400 font-medium">${item.UH5 ?? ""}</td>
+                <td class="p-2 font-extrabold text-blue-600 bg-blue-50/30">${rtuh}</td>
+                <td class="p-2 font-semibold text-slate-600">${sumatif}</td>
                 <td class="p-3 pr-4 text-right"><span class="px-2.5 py-1 rounded-lg font-bold text-xs ${naBadge}">${na}</span></td>
               </tr>
             `;
@@ -1286,24 +1234,23 @@
       }
     }
 
-    /**
-     * Memanggil daftar nama di Portal Siswa saat kelas difilter
-     */
     async function loadStudentsForSiswaPortal() {
-      const kelas = document.getElementById("siswa-kelas-select").value;
+      const selectVal = document.getElementById("siswa-kelas-select").value;
       const nameSelect = document.getElementById("siswa-nama-select");
       
       nameSelect.innerHTML = `<option value="">-- Pilih Nama Siswa --</option>`;
       document.getElementById("siswa-report-card").classList.add("hidden");
       document.getElementById("siswa-portal-placeholder").classList.remove("hidden");
 
-      if (!kelas) {
+      if (!selectVal) {
         nameSelect.disabled = true;
         return;
       }
 
+      const [kelas, mapel] = selectVal.split("|");
+
       try {
-        const students = await callAPI("getSiswa", { kelas: kelas });
+        const students = await callAPI("getSiswa", { kelas, mapel });
         students.forEach(student => {
           nameSelect.innerHTML += `<option value="${student.nama}">${student.nama}</option>`;
         });
@@ -1313,36 +1260,31 @@
       }
     }
 
-    /**
-     * Merender Dashboard capaian belajar individual siswa
-     */
     async function showSiswaDetailDashboard() {
-      const kelas = document.getElementById("siswa-kelas-select").value;
+      const selectVal = document.getElementById("siswa-kelas-select").value;
       const nama = document.getElementById("siswa-nama-select").value;
 
-      if (!kelas || !nama) return;
+      if (!selectVal || !nama) return;
+
+      const [kelas, mapel] = selectVal.split("|");
 
       document.getElementById("siswa-portal-placeholder").classList.add("hidden");
       document.getElementById("siswa-report-card").classList.remove("hidden");
 
       try {
-        // Ambil rekap data kelas
-        const data = await callAPI("getRekap", { kelas: kelas });
+        const data = await callAPI("getRekap", { kelas, mapel });
         const sPresensi = data.presensi.find(p => p.nama === nama) || { H:0, S:0, I:0, A:0, totalSesi:0, persentaseKehadiran: 0 };
         const sNilai = data.nilai.find(n => n.nama === nama) || { RTTG:0, RTUH:0, Sumatif:0, Nilai_Akhir:0 };
 
-        // Render Rincian Bio
         document.getElementById("student-name-title").innerText = nama;
-        document.getElementById("student-class-title").innerText = `SMAN 1 Kapuas Murung • Kelas ${kelas}`;
+        document.getElementById("student-class-title").innerText = `Kelas ${kelas} • Mapel: ${mapel}`;
         document.getElementById("student-score-val").innerText = sNilai.Nilai_Akhir !== "" && sNilai.Nilai_Akhir !== null ? Number(sNilai.Nilai_Akhir).toFixed(1) : "0.0";
 
-        // Render Rincian Absensi
         document.getElementById("student-h").innerText = sPresensi.H || 0;
         document.getElementById("student-s").innerText = sPresensi.S || 0;
         document.getElementById("student-i").innerText = sPresensi.I || 0;
         document.getElementById("student-a").innerText = sPresensi.A || 0;
 
-        // Render SVG diagram lingkaran kehadiran
         const pct = sPresensi.persentaseKehadiran || 0;
         document.getElementById("attendance-pct").innerText = pct + "%";
         const circle = document.getElementById("attendance-circle");
@@ -1351,7 +1293,6 @@
         const offset = circumference - (pct / 100) * circumference;
         circle.style.strokeDashoffset = offset;
 
-        // Render Grafik Perkembangan Nilai
         renderStudentChart(sNilai);
 
       } catch (err) {
@@ -1359,9 +1300,6 @@
       }
     }
 
-    /**
-     * Membangun Chart.js Line Chart
-     */
     function renderStudentChart(gradeRecord) {
       const ctx = document.getElementById('studentChart').getContext('2d');
       if (currentChart) currentChart.destroy();
@@ -1411,10 +1349,7 @@
       });
     }
 
-    /**
-     * Membuka Detail Siswa per individu dari Tabel Rekap Guru (Modal popup interaktif)
-     */
-    function showStudentDetailModal(nama, kelas) {
+    function showStudentDetailModal(nama, kelas, mapel) {
       if (!rekapCache) return;
       const sPresensi = rekapCache.presensi.find(p => p.nama === nama) || { H:0, S:0, I:0, A:0, totalSesi:0, persentaseKehadiran: 0, detail: [] };
       const sNilai = rekapCache.nilai.find(n => n.nama === nama) || { RTTG:0, RTUH:0, Sumatif:0, Nilai_Akhir:0 };
@@ -1427,7 +1362,7 @@
         <div class="mb-4">
           <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest block">Dashboard Individu Siswa</span>
           <h3 class="text-2xl font-extrabold text-slate-800">${nama}</h3>
-          <p class="text-xs text-slate-400 font-semibold">${kelas} • SMAN 1 Kapuas Murung</p>
+          <p class="text-xs text-slate-400 font-semibold">Kelas ${kelas} • Mapel: ${mapel}</p>
         </div>
 
         <div class="grid grid-cols-2 gap-4 mb-4">
@@ -1465,19 +1400,13 @@
       document.getElementById("studentDetailModal").classList.add("hidden");
     }
 
-    /**
-     * Cetak atau Ekspor tabel HTML ke file Excel (.xlsx) menggunakan SheetJS
-     */
     function exportToExcel(tableId, filename) {
       const table = document.getElementById(tableId);
-      const wb = XLSX.utils.table_to_book(table, { sheet: "Kompilasi Laporan" });
+      const wb = XLSX.utils.table_to_book(table, { sheet: "Laporan" });
       XLSX.writeFile(wb, `${filename}_${new Date().toISOString().substring(0, 10)}.xlsx`);
       showToast("Tabel Berhasil Diekspor ke Excel!");
     }
 
-    /**
-     * Cetak area HTML ke bentuk berkas PDF menggunakan html2pdf
-     */
     function exportToPDF(elementId, filename) {
       const element = document.getElementById(elementId);
       const opt = {
@@ -1495,5 +1424,3 @@
   </script>
 </body>
 </html>
-```
-eof
